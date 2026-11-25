@@ -53,17 +53,6 @@ public class AlertManager {
         return result.isPresent() && result.get() == ButtonType.OK;
     }
     
-    /** Shortcut for showConfirmation with no header text. */
-    public static boolean confirm(String message) {
-        return showConfirmation("Confirmation", null, message);
-    }
-    
-    /** Asks "Are you sure you want to exit?" Returns true if confirmed. */
-    public static boolean confirmExit() {
-        return showConfirmation("Confirmation", "Exit Application", 
-                              "Are you sure you want to exit the application?");
-    }
-    
     /** Asks "Are you sure you want to delete: [name]?" Returns true if confirmed. */
     public static boolean confirmDelete(String itemName) {
         return showConfirmation("Confirmation", "Delete Record", 

@@ -29,16 +29,6 @@ public abstract class BaseController implements Initializable {
         this.stage = stage;
     }
     
-    /** Opens a new window without blocking the current one. */
-    protected void openNewWindow(String fxmlPath, String title) {
-        WindowManager.openWindow(fxmlPath, title);
-    }
-    
-    /** Opens a modal window — blocks the current window until closed. */
-    protected void openModalWindow(String fxmlPath, String title) {
-        WindowManager.openWindow(fxmlPath, title, true);
-    }
-    
     /**
      * Replaces the content of the current window with a new FXML screen.
      * Used to switch between Login, Registration, and Events screens

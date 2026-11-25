@@ -37,8 +37,8 @@ public class DatabaseConnection {
     static {
         Properties env = loadEnvFile();
         DB_URL      = env.getProperty("DB_URL",      "jdbc:mysql://localhost:3306/");
-        DB_NAME     = env.getProperty("DB_NAME",     "events_app");
-        DB_USER     = env.getProperty("DB_USER",     "root");
+        DB_NAME     = env.getProperty("DB_NAME",     "");
+        DB_USER     = env.getProperty("DB_USER",     "");
         DB_PASSWORD = env.getProperty("DB_PASSWORD", "");
     }
 

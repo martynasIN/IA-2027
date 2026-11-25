@@ -58,24 +58,6 @@ public class WindowManager {
         }
     }
     
-    /** Opens a window with a fixed width and height. */
-    public static Stage openWindow(String fxmlPath, String title, double width, double height) {
-        try {
-            FXMLLoader loader = new FXMLLoader(WindowManager.class.getResource("/com/ia/ia_base/" + fxmlPath));
-            Parent root = loader.load();
-            
-            Stage stage = new Stage();
-            stage.setTitle(title);
-            stage.setScene(new Scene(root, width, height));
-            stage.show();
-            return stage;
-        } catch (IOException e) {
-            System.err.println("Error opening window: " + fxmlPath);
-            e.printStackTrace();
-            return null;
-        }
-    }
-    
     /** Closes a window. */
     public static void closeWindow(Stage stage) {
         if (stage != null) {
