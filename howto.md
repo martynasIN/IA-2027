@@ -114,7 +114,8 @@ Button click (FXML)
 ```
 src/main/java/com/ia/ia_base/
 │
-├── MainApplication.java          ← starts the app
+├── Launcher.java                 ← run this in IntelliJ
+├── MainApplication.java          ← JavaFX Application class
 ├── database/
 │   ├── DatabaseConnection.java   ← opens MySQL connection (Singleton)
 │   └── dao/
@@ -389,11 +390,14 @@ Parent root = loader.load();
 
 EventFormController formController = loader.getController();
 formController.setEvent(null);    // null = add mode
-formController.setStage(formStage);
 
 Stage formStage = new Stage();
 formStage.initModality(Modality.APPLICATION_MODAL);
 formStage.setScene(new Scene(root, 420, 360));
+formStage.setResizable(false);
+
+formController.setStage(formStage);  // pass stage after it is created
+
 formStage.showAndWait();   // ← pauses here until form closes
 
 loadEvents();              // ← runs only after form is closed
