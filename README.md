@@ -1,0 +1,68 @@
+# Events App — IB CS IA Base Project
+
+A JavaFX + MySQL example application for IB CS Internal Assessment students.
+See **[howto.md](howto.md)** for a full explanation of the architecture, patterns, and how to adapt it for your own IA.
+
+---
+
+## Quick Start
+
+### 1. Create the database
+
+```bash
+mysql -u root -p < database_setup.sql
+```
+
+Or paste `database_setup.sql` into MySQL Workbench / phpMyAdmin.
+
+### 2. Configure credentials
+
+Copy `.env.example` and rename it to `.env`:
+
+```bash
+cp .env.example .env
+```
+
+Open `.env` and fill in your MySQL credentials:
+
+```
+DB_URL=jdbc:mysql://localhost:3306/
+DB_NAME=events_app
+DB_USER=root
+DB_PASSWORD=your_password_here
+```
+
+> `.env` is in `.gitignore` — it will never be committed to Git. Never store passwords in source code.
+
+### 3. (Optional) Enable API import
+
+To import events from an external API, add the endpoint to `.env`:
+
+```
+API_1_NAME=Vilnius Events
+API_1_URL=https://comealone.app/feed/v1/city/vilnius.json
+API_1_KEY=
+```
+
+The app will ask on login whether to import. Leave `API_1_KEY` empty for public APIs.
+See the **[API section in howto.md](howto.md)** for how to use your own API.
+
+### 4. Run the application
+
+```bash
+mvn clean javafx:run
+```
+
+Or open the project in IntelliJ and run `Launcher.java`.
+
+---
+
+## Requirements
+
+- Java 24
+- Maven
+- MySQL Server
+
+---
+
+Created by IB CS teacher: Martynas Kaselionis — martynas.kaselionis@benediktogimnazija.lt

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<!--
+    ═══════════════════════════════════════════════════
+    RESPONSIVE LAYOUT — how it works
+    ═══════════════════════════════════════════════════
+
+    BorderPane divides the window into 5 zones:
+      top / bottom → fixed height (take natural size)
+      left / right → fixed width  (take natural size)
+      center       → fills ALL remaining space
+
+    When the user resizes or maximises the window,
+    only the CENTER zone grows/shrinks.
+
+    Inside the center VBox:
+      • Label and HBox buttons keep their natural height
+      • TableView with VBox.vgrow="ALWAYS" gets ALL
+        remaining vertical space → it grows with the window
+
+    Inside the top HBox:
+      • Region with HBox.hgrow="ALWAYS" is an invisible
+        elastic spacer → it pushes the Logout button to
+        the right edge, no matter how wide the window is
+    ═══════════════════════════════════════════════════
+-->
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.ia.ia_base.controllers.EventsController">
+
+    <!-- TOP — fixed height, stretches full width -->
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="10"
+              style="-fx-background-color: #f0f0f0; -fx-border-color: #cccccc; -fx-border-width: 0 0 1 0;">
+            <padding>
+                <Insets top="10" right="15" bottom="10" left="15"/>
+            </padding>
+
+            <Label fx:id="welcomeLabel" text="Welcome!" style="-fx-font-size: 14px;"/>
+
+            <!--
+                HBox.hgrow="ALWAYS" → this invisible Region expands
+                to fill all free horizontal space, pushing the
+                Logout button to the far right.
+            -->
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <Button text="Logout" onAction="#handleLogout" mnemonicParsing="false"/>
+        </HBox>
+    </top>
+
+    <!-- CENTER — grows when window is resized / maximised -->
+    <center>
+        <VBox spacing="10">
+            <padding>
+                <Insets top="15" right="15" bottom="15" left="15"/>
+            </padding>
+
+            <Label text="My Events" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+
+            <HBox spacing="10">
+                <Button text="Add Event" onAction="#handleAddEvent" mnemonicParsing="false"/>
+            </HBox>
+
+            <!--
+                VBox.vgrow="ALWAYS" → TableView takes ALL remaining
+                vertical space inside the VBox.
+                Column widths are managed by CONSTRAINED_RESIZE_POLICY
+                set in EventsController.initialize() — columns share
+                the full table width and resize with the window.
+            -->
+            <TableView fx:id="eventsTable" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="titleColumn"       text="Title"       minWidth="120"/>
+                    <TableColumn fx:id="categoryColumn"    text="Category"    minWidth="90"/>
+                    <TableColumn fx:id="dateColumn"        text="Date"        minWidth="90"/>
+                    <TableColumn fx:id="descriptionColumn" text="Description" minWidth="120"/>
+                    <TableColumn fx:id="actionsColumn"     text="Actions"     minWidth="140"/>
+                </columns>
+                <placeholder>
+                    <Label text="No events yet. Click 'Add Event' to create your first event."/>
+                </placeholder>
+            </TableView>
+
+        </VBox>
+    </center>
+
+</BorderPane>

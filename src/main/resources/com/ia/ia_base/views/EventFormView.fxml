@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<!--
+    ═══════════════════════════════════════════════════
+    FORM LAYOUT — how it works
+    ═══════════════════════════════════════════════════
+
+    GridPane splits the form into two columns:
+      Column 0 (labels) → fixed width
+      Column 1 (inputs) → hgrow="ALWAYS" → fills remaining width
+
+    maxWidth="Infinity" on each input control tells JavaFX
+    that the control is allowed to grow as wide as its
+    column permits. Without it the control stays at its
+    default (narrow) preferred width even if the column is wider.
+    ═══════════════════════════════════════════════════
+-->
+<VBox spacing="15" xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.ia.ia_base.controllers.EventFormController">
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <Label fx:id="formTitleLabel" text="Event"
+           style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+
+    <!--
+        GridPane column constraints:
+          col 0 — label column, fixed 100 px
+          col 1 — input column, hgrow=ALWAYS → takes all remaining width
+    -->
+    <GridPane hgap="10" vgap="12" maxWidth="Infinity">
+        <columnConstraints>
+            <ColumnConstraints minWidth="100" prefWidth="100"/>
+            <ColumnConstraints hgrow="ALWAYS"/>
+        </columnConstraints>
+
+        <Label text="Title:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+        <!-- maxWidth="Infinity" → fills the full width of column 1 -->
+        <TextField fx:id="titleField" promptText="Event title"
+                   maxWidth="Infinity"
+                   GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+
+        <Label text="Category:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+        <ComboBox fx:id="categoryComboBox" promptText="Select category"
+                  maxWidth="Infinity"
+                  GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+        <Label text="Date:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+        <DatePicker fx:id="datePicker"
+                    maxWidth="Infinity"
+                    GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+        <Label text="Description:" GridPane.columnIndex="0" GridPane.rowIndex="3"
+               GridPane.valignment="TOP"/>
+        <TextArea fx:id="descriptionArea" promptText="Optional description"
+                  wrapText="true" prefRowCount="3"
+                  maxWidth="Infinity"
+                  GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+    </GridPane>
+
+    <HBox spacing="10" alignment="CENTER_RIGHT">
+        <Button text="Cancel" onAction="#handleCancel" mnemonicParsing="false"/>
+        <Button text="Save"   onAction="#handleSave"   mnemonicParsing="false"
+                style="-fx-font-weight: bold;"/>
+    </HBox>
+
+</VBox>
