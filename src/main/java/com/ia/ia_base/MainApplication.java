@@ -2,6 +2,7 @@ package com.ia.ia_base;
 
 import com.ia.ia_base.controllers.LoginController;
 import com.ia.ia_base.database.DatabaseConnection;
+import com.ia.ia_base.util.AlertManager;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -24,15 +25,27 @@ public class MainApplication extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        // Connect to the database
-        try {
-            DatabaseConnection.getInstance().getConnection();
-            System.out.println("Database connection: OK");
-        } catch (SQLException e) {
-            System.err.println("WARNING: Could not connect to the database!");
-            System.err.println("  → Check the settings in DatabaseConnection.java");
-            System.err.println("  → Make sure MySQL is running and database_setup.sql was run");
-            System.err.println("  → Error: " + e.getMessage());
+        // Check database configuration and connection
+        if (!DatabaseConnection.isConfigured()) {
+            // .env file exists but DB_NAME / DB_USER are empty
+            AlertManager.showInfo("Setup Required",
+                "Database credentials are not configured.\n\n" +
+                "Copy .env.example → .env and fill in your MySQL credentials:\n" +
+                "  DB_NAME, DB_USER, DB_PASSWORD");
+        } else {
+            try {
+                DatabaseConnection.getInstance().getConnection();
+                System.out.println("Database connection: OK");
+            } catch (SQLException e) {
+                // Credentials are set but connection failed (MySQL not running, wrong password, etc.)
+                AlertManager.showError("Database Connection Failed",
+                    "Could not connect to the database.\n\n" +
+                    "Make sure:\n" +
+                    "  • MySQL server is running\n" +
+                    "  • database_setup.sql was executed\n" +
+                    "  • .env credentials are correct\n\n" +
+                    "Error: " + e.getMessage());
+            }
         }
 
         // Load and show the Login screen

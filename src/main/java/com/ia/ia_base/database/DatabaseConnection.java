@@ -80,6 +80,11 @@ public class DatabaseConnection {
         }
     }
 
+    /** Returns true if DB_NAME and DB_USER were loaded from .env (not empty). */
+    public static boolean isConfigured() {
+        return !DB_NAME.isBlank() && !DB_USER.isBlank();
+    }
+
     public boolean isConnected() {
         try {
             return connection != null && !connection.isClosed();
